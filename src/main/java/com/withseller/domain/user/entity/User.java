@@ -1,13 +1,14 @@
 package com.withseller.domain.user.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import com.withseller.domain.common.entity.BaseTimeEntity;
+import jakarta.persistence.*;
+import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.Collection;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -15,7 +16,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @Builder
 @Table(name = "users")
-public class User {
+public class User extends BaseTimeEntity implements UserDetails {
     @Id
     private String email;
 
@@ -31,13 +32,52 @@ public class User {
     @Column(name = "representative_name", nullable = false)
     private String representativeName;
 
-    @Column(name = "image_url", nullable = false)
-    private String imageUrl;
-
     @Column(name = "registration_number", nullable = false)
     private long registrationNumber;
 
     @Column(name = "signup_source")
     private String signupSource;
 
+    @Column(name = "terms_agreement", length = 1, nullable = false)
+    private String termsAgreement;
+
+    @Column(name = "privacy_agreement", length = 1, nullable = false)
+    private String privacyAgreement;
+
+    @ColumnDefault("'N'")
+    @Column(name = "promotion_agreement", length = 1)
+    private String promotionAgreement;
+
+    @ElementCollection
+    private List<String> roles;
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return null;
+    }
+
+    @Override
+    public String getUsername() {
+        return null;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return false;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return false;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return false;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return false;
+    }
 }
