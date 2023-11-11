@@ -3,11 +3,16 @@ package com.withseller.domain.user.dto;
 import com.withseller.domain.user.entity.User;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class  SignupRequest {
     @NotEmpty(message = "이메일을 입력해주세요.")
     @Email(message = "유효하지 않은 이메일 형식입니다.")
@@ -25,8 +30,8 @@ public class  SignupRequest {
     @NotEmpty(message = "대표자명을 입력해주세요.")
     private String representativeName;
 
-    @NotEmpty(message = "사업자 등록번호를 입력해주세요.")
-    private long registrationNumber;
+    @NotNull(message = "사업자 등록번호를 입력해주세요.")
+    private Long registrationNumber;
 
     private String signupSource;
 
