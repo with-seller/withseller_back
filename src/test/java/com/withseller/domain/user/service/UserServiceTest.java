@@ -6,6 +6,7 @@ import com.withseller.domain.user.repository.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -14,6 +15,9 @@ class UserServiceTest {
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     @Test
     void signup() {
@@ -26,7 +30,7 @@ class UserServiceTest {
                 .phoneNumber("01012341234")
                 .companyName("hm_company")
                 .representativeName("hmmini")
-                .registrationNumber(123561)
+                .registrationNumber(123561L)
                 .signupSource("web surfing")
                 .termsAgreement("Y")
                 .privacyAgreement("Y")
@@ -44,5 +48,22 @@ class UserServiceTest {
         assertEquals(findUser.getEmail(), user.getEmail());
 
         System.out.println(findUser);
+    }
+
+    @Test
+    void passwordEncodeTest() {
+        String text = "encodingTest";
+        String encodeText = passwordEncoder.encode(text);
+
+        String text2 = "encodingTest";
+        String encodeText2 = passwordEncoder.encode(text2);
+
+        System.out.println("text = " + text);
+        System.out.println("encodeText = " + encodeText);
+
+        System.out.println("text2 = " + text2);
+        System.out.println("encodeText2 = " + encodeText2);
+
+        assertTrue(passwordEncoder.matches(text, encodeText));
     }
 }
