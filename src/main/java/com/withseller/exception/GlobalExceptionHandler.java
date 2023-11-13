@@ -1,10 +1,13 @@
 package com.withseller.exception;
 
 import com.withseller.domain.common.dto.CommonResponse;
+import com.withseller.exception.user.NotFoundUserException;
+import com.withseller.exception.user.NotMatchPasswordException;
 import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -51,5 +54,17 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     protected ResponseEntity<CommonResponse> dataIntegrityViolationException() {
         log.error("DataIntegrityViolationException throw Exception : {}", DATA_INTEGRITY_VIOLATION);
         return CommonResponse.toResponseEntity(DATA_INTEGRITY_VIOLATION);
+    }
+
+    @ExceptionHandler(value = { NotFoundUserException.class })
+    protected ResponseEntity<CommonResponse> notFoundUserException(RuntimeException e) {
+        log.error("RuntimeException throw notFoundUserException : {}", e.getMessage());
+        return CommonResponse.toResponseEntity(HttpStatus.NOT_FOUND, e.getMessage());
+    }
+
+    @ExceptionHandler(value = { NotMatchPasswordException.class })
+    protected ResponseEntity<CommonResponse> notMatchPasswordException(RuntimeException e) {
+        log.error("RuntimeException throw notMatchPasswordException : {}", e.getMessage());
+        return CommonResponse.toResponseEntity(HttpStatus.NOT_FOUND, e.getMessage());
     }
 }

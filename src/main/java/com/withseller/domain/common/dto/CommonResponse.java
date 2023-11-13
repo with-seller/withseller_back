@@ -3,6 +3,7 @@ package com.withseller.domain.common.dto;
 import com.withseller.exception.ErrorCode;
 import lombok.Builder;
 import lombok.Data;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 @Data
@@ -19,8 +20,8 @@ public class CommonResponse {
                         .build());
     }
 
-    public static ResponseEntity<CommonResponse> toResponseEntity(ErrorCode errorCode, String message) {
-        return ResponseEntity.status(errorCode.getStatus())
+    public static ResponseEntity<CommonResponse> toResponseEntity(HttpStatus httpStatus, String message) {
+        return ResponseEntity.status(httpStatus)
                 .body(CommonResponse.builder()
                         .status("FAIL")
                         .message(message)
