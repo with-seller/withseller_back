@@ -1,6 +1,7 @@
 package com.withseller.domain.user.controller;
 
 import com.withseller.domain.common.dto.CommonResponse;
+import com.withseller.domain.user.dto.LoginRequest;
 import com.withseller.domain.user.dto.SignupRequest;
 import com.withseller.domain.user.service.UserService;
 import jakarta.validation.Valid;
@@ -21,5 +22,10 @@ public class UserController {
     @PostMapping("/signup")
     public ResponseEntity<CommonResponse> signup(@Valid @RequestBody SignupRequest signupRequest) {
         return userService.signup(signupRequest);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<CommonResponse> login(@Valid @RequestBody LoginRequest loginRequest) {
+        return userService.login(loginRequest);
     }
 }

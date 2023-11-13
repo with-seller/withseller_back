@@ -33,7 +33,7 @@ public class User extends BaseTimeEntity implements UserDetails {
     private String representativeName;
 
     @Column(name = "registration_number", nullable = false)
-    private long registrationNumber;
+    private Long registrationNumber;
 
     @Column(name = "signup_source")
     private String signupSource;
