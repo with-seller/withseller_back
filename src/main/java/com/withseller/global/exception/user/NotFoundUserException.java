@@ -1,4 +1,4 @@
-package com.withseller.exception.user;
+package com.withseller.global.exception.user;
 
 public class NotFoundUserException extends RuntimeException {
     public NotFoundUserException() {
